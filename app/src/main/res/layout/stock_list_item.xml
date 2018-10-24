@@ -7,7 +7,7 @@
 
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/detailsTextView"
+        android:id="@+id/details"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -17,29 +17,29 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/symbolTextView"
+            android:id="@+id/tv_symbol"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="ABCDE"
             android:textSize="14sp"
-            app:layout_constraintBottom_toTopOf="@+id/exchangeTextView"
+            app:layout_constraintBottom_toTopOf="@+id/tv_exchange"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/exchangeTextView"
+            android:id="@+id/tv_exchange"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="NYSE"
             android:textSize="8sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/symbolTextView" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_symbol" />
 
     </android.support.constraint.ConstraintLayout>
 
     <TextView
-        android:id="@+id/companyNameTextView"
+        android:id="@+id/tv_company_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
