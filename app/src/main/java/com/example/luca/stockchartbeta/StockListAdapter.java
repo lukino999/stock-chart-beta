@@ -8,17 +8,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class StockListAdapter extends
         RecyclerView.Adapter<StockListAdapter.StockViewHolder> {
 
     private int mNumberItems;
-    private List<Stock> mStockList;
+    private ArrayList<Stock> mStockList;
 
 
-    public StockListAdapter(List<Stock> stockList) {
-        mStockList.addAll(stockList);
+    public StockListAdapter(ArrayList<Stock> stockList) {
+        mStockList = stockList;
         mNumberItems = stockList.size();
     }
 
