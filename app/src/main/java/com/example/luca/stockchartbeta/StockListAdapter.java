@@ -16,10 +16,17 @@ public class StockListAdapter extends
     private int mNumberItems;
     private ArrayList<Stock> mStockList;
 
+    final private ListItemClickListener mOnClickListener;
 
-    public StockListAdapter(ArrayList<Stock> stockList) {
+    public interface ListItemClickListener{
+        void onListItemClick(int index);
+    }
+
+
+    public StockListAdapter(ArrayList<Stock> stockList, ListItemClickListener itemClickListener) {
         mStockList = stockList;
         mNumberItems = stockList.size();
+        mOnClickListener = itemClickListener;
     }
 
 
@@ -50,7 +57,7 @@ public class StockListAdapter extends
 
 
     // View holder for the stock item
-    class StockViewHolder extends RecyclerView.ViewHolder {
+    class StockViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView companyNameView;
         TextView symbolView;
@@ -63,6 +70,8 @@ public class StockListAdapter extends
             companyNameView = itemView.findViewById(R.id.tv_company_name);
             symbolView = itemView.findViewById(R.id.tv_symbol);
             exchangeView = itemView.findViewById(R.id.tv_exchange);
+
+            itemView.setOnClickListener(this);
         }
 
 
@@ -73,6 +82,11 @@ public class StockListAdapter extends
             exchangeView.setText(stock.getExchange());
         }
 
+        @Override
+        public void onClick(View view) {
+            int clickedPosition = getAdapterPosition();
+            mOnClickListener.onListItemClick(clickedPosition);
+        }
     }
 
 

@@ -16,7 +16,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
+public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener,
+        StockListAdapter.ListItemClickListener {
 
     private static final String TAG = "MainActivity";
 
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         // improve performance
         mStockList.setHasFixedSize(true);
 
-        mAdapter = new StockListAdapter(getArray());
+        mAdapter = new StockListAdapter(getArray(), this);
 
         mStockList.setAdapter(mAdapter);
 
@@ -97,5 +98,10 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         }
 
         return items;
+    }
+
+    @Override
+    public void onListItemClick(int index) {
+        Log.d(TAG, "onListItemClick: " + index);
     }
 }
