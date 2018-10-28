@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         // improve performance
         mStockList.setHasFixedSize(true);
 
+        // sets the listener to StockListAdapter.ListItemClickListener interface
         mAdapter = new StockListAdapter(getArray(), this);
 
         mStockList.setAdapter(mAdapter);
@@ -52,31 +53,41 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
+        // inflate /res/menu/search.xml
         getMenuInflater().inflate(R.menu.search, menu);
 
+        // get a reference to menu item search_button
         MenuItem searchButton = menu.findItem(R.id.search_button);
+
+        // get a reference to the android.support.v7.widget.SearchView
         SearchView searchView = (SearchView) searchButton.getActionView();
+        // sets the listener to SearchView.OnQueryTextListener
         searchView.setOnQueryTextListener(this);
+
+        // returning true will display the menu
         return true;
     }
 
 
+    // SearchView.OnQueryTextListener methods implementation
     @Override
     public boolean onQueryTextSubmit(String s) {
         Log.d(TAG, "onQueryTextSubmit: " + s);
 
+        // job done
         return true;
     }
-
 
     @Override
     public boolean onQueryTextChange(String s) {
         Log.d(TAG, "onQueryTextChange: " + s);
 
+        // job done
         return true;
     }
 
+
+    // returns an ArrayList of Stock from the .csv file stored in /res/raw
     private ArrayList<Stock> getArray() {
 
         // get inputStream from /res/raw/nasdaq.csv
@@ -100,6 +111,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         return items;
     }
 
+
+    // StockListAdapter.ListItemClickListener implementation
     @Override
     public void onListItemClick(int index) {
         Log.d(TAG, "onListItemClick: " + index);
