@@ -17,7 +17,11 @@ public interface StockDao {
     @Insert
     void insertStock(Stock stock);
 
+    @Insert
+    void insertAll(List<Stock> Stocks);
+
     @Update(onConflict = OnConflictStrategy.REPLACE)
     void updateStock(Stock stock);
 
 }
+

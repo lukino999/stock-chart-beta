@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener,
         StockListAdapter.ListItemClickListener {
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
     private StockListAdapter mAdapter;
     private RecyclerView mStockList;
+    private AppDatabase mDb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +34,10 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         // setup action bar
         Toolbar toolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
+
+        // get inputStream from /res/raw/nasdaq.csv
+        InputStream inputStream = getResources().openRawResource(R.raw.nasdaq);
+        mDb = AppDatabase.getInstance(getApplicationContext(), inputStream);
 
         // wire up the recycleView with the adapter
         // get the reference to the recycler view
@@ -69,6 +75,18 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     }
 
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // testing
+        List<Stock> temp = mDb.stockDao().loadAllStocks();
+        Log.d(TAG, "temp size:" + temp.size());
+        for (Stock stock : temp) {
+            Log.d(TAG, stock.getSymbol());
+        }
+    }
+
     // SearchView.OnQueryTextListener methods implementation
     @Override
     public boolean onQueryTextSubmit(String s) {
@@ -88,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
 
     // returns an ArrayList of Stock from the .csv file stored in /res/raw
-    private ArrayList<Stock> getArray() {
+    public ArrayList<Stock> getArray() {
 
         // get inputStream from /res/raw/nasdaq.csv
         InputStream inputStream = getResources().openRawResource(R.raw.nasdaq);
