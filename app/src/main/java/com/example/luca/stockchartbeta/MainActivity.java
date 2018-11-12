@@ -48,11 +48,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         // improve performance
         mStockList.setHasFixedSize(true);
 
-        // sets the listener to StockListAdapter.ListItemClickListener interface
-        mAdapter = new StockListAdapter(getArray(), this);
-
-        mStockList.setAdapter(mAdapter);
-
 
     }
 
@@ -79,12 +74,21 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     protected void onResume() {
         super.onResume();
 
-        // testing
-        List<Stock> temp = mDb.stockDao().loadAllStocks();
-        Log.d(TAG, "temp size:" + temp.size());
-        for (Stock stock : temp) {
-            Log.d(TAG, stock.getSymbol());
-        }
+        AppExecutors.getInstance().getDiskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+
+                final List<Stock> temp = mDb.stockDao().loadAllStocks();
+
+                mAdapter = new StockListAdapter(temp, MainActivity.this);
+
+                mStockList.setAdapter(mAdapter);
+
+            }
+        });
+
+
+
     }
 
     // SearchView.OnQueryTextListener methods implementation
@@ -102,31 +106,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
         // job done
         return true;
-    }
-
-
-    // returns an ArrayList of Stock from the .csv file stored in /res/raw
-    public ArrayList<Stock> getArray() {
-
-        // get inputStream from /res/raw/nasdaq.csv
-        InputStream inputStream = getResources().openRawResource(R.raw.nasdaq);
-
-        // get stream reader
-        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-
-        // iterate through the csv and add to items
-        ArrayList<Stock> items = new ArrayList<>();
-        String line;
-        try {
-            while ((line = reader.readLine()) != null) {
-                String[] value = line.split(",");
-                items.add(new Stock(value[1], value[0], "NASDAQ"));
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return items;
     }
 
 

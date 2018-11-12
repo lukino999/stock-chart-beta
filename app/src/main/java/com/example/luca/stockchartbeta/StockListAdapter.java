@@ -8,12 +8,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class StockListAdapter extends
         RecyclerView.Adapter<StockListAdapter.StockViewHolder> {
 
     private int mNumberItems;
-    private ArrayList<Stock> mStockList;
+    private List<Stock> mStockList;
 
     final private ListItemClickListener mOnClickListener;
 
@@ -25,7 +26,7 @@ public class StockListAdapter extends
 
     // StockListAdapter constructor
     // takes ArrayList<Stock> to display and the ListItemClickListener to respond to clicks
-    public StockListAdapter(ArrayList<Stock> stockList, ListItemClickListener itemClickListener) {
+    public StockListAdapter(List<Stock> stockList, ListItemClickListener itemClickListener) {
         mStockList = stockList;
         mNumberItems = stockList.size();
         mOnClickListener = itemClickListener;
