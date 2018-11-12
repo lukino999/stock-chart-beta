@@ -13,7 +13,7 @@ import java.util.List;
 public class StockListAdapter extends
         RecyclerView.Adapter<StockListAdapter.StockViewHolder> {
 
-    private int mNumberItems;
+    private int mNumberItems = 0;
     private List<Stock> mStockList;
 
     final private ListItemClickListener mOnClickListener;
@@ -26,10 +26,15 @@ public class StockListAdapter extends
 
     // StockListAdapter constructor
     // takes ArrayList<Stock> to display and the ListItemClickListener to respond to clicks
-    public StockListAdapter(List<Stock> stockList, ListItemClickListener itemClickListener) {
-        mStockList = stockList;
-        mNumberItems = stockList.size();
+    public StockListAdapter(ListItemClickListener itemClickListener) {
         mOnClickListener = itemClickListener;
+    }
+
+
+    public void setStockList(List<Stock> stocks) {
+        mStockList = stocks;
+        mNumberItems = mStockList.size();
+        notifyDataSetChanged();
     }
 
 

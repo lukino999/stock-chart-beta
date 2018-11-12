@@ -13,11 +13,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener,
@@ -50,6 +46,9 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         mStockList.setLayoutManager(layoutManager);
         // improve performance
         mStockList.setHasFixedSize(true);
+        // set the adapter
+        mAdapter = new StockListAdapter(MainActivity.this);
+        mStockList.setAdapter(mAdapter);
         //
         retrieveStockList();
 
@@ -81,8 +80,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         stocks.observe(this, new Observer<List<Stock>>() {
             @Override
             public void onChanged(@Nullable List<Stock> stocks) {
-                mAdapter = new StockListAdapter(stocks, MainActivity.this);
-                mStockList.setAdapter(mAdapter);
+                mAdapter.setStockList(stocks);
             }
         });
     }
