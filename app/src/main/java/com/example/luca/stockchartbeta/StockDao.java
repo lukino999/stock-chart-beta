@@ -1,5 +1,6 @@
 package com.example.luca.stockchartbeta;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
@@ -12,7 +13,7 @@ import java.util.List;
 public interface StockDao {
 
     @Query("SELECT * FROM stock ORDER BY name")
-    List<Stock> loadAllStocks();
+    LiveData<List<Stock>> loadAllStocks();
 
     @Insert
     void insertStock(Stock stock);

@@ -1,6 +1,9 @@
 package com.example.luca.stockchartbeta;
 
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.Observer;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -47,6 +50,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         mStockList.setLayoutManager(layoutManager);
         // improve performance
         mStockList.setHasFixedSize(true);
+        //
+        retrieveStockList();
 
 
     }
@@ -70,22 +75,16 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     }
 
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
+    private void retrieveStockList() {
         // get List<Stock> from database
-        AppExecutors.getInstance().getDiskIO().execute(new Runnable() {
+        final LiveData<List<Stock>> stocks = mDb.stockDao().loadAllStocks();
+        stocks.observe(this, new Observer<List<Stock>>() {
             @Override
-            public void run() {
-                final List<Stock> temp = mDb.stockDao().loadAllStocks();
-                mAdapter = new StockListAdapter(temp, MainActivity.this);
+            public void onChanged(@Nullable List<Stock> stocks) {
+                mAdapter = new StockListAdapter(stocks, MainActivity.this);
                 mStockList.setAdapter(mAdapter);
             }
         });
-
-
-
     }
 
     // SearchView.OnQueryTextListener methods implementation
