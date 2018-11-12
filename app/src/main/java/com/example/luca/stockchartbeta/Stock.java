@@ -14,7 +14,7 @@ import android.arch.persistence.room.PrimaryKey;
 public class Stock {
 
     @PrimaryKey(autoGenerate = true)
-    private int mID;
+    private int mId;
     private String mName;
     private String mSymbol;
     private String mExchange;
@@ -28,14 +28,14 @@ public class Stock {
     }
 
     public Stock(int id, String name, String symbol, String exchange) {
-        mID = id;
+        mId = id;
         mName = name;
         mSymbol = symbol;
         mExchange = exchange;
     }
 
     public int getId() {
-        return mID;
+        return mId;
     }
 
     public String getCompanyName() {
