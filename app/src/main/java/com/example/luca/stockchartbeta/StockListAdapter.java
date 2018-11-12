@@ -85,8 +85,8 @@ public class StockListAdapter extends
 
         // binds the stock data to the views
         void bind(Stock stock) {
-            companyNameView.setText(stock.getCompanyName());
-            symbolView.setText(stock.getTickerSymbol());
+            companyNameView.setText(stock.getName());
+            symbolView.setText(stock.getSymbol());
             exchangeView.setText(stock.getExchange());
         }
 

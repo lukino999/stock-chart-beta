@@ -6,13 +6,13 @@ import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
-import java.util.ArrayList;
+import java.util.List;
 
 @Dao
 public interface StockDao {
 
-    @Query("SELECT * FROM stock ORDER BY mName")
-    ArrayList<Stock> loadAllStocks();
+    @Query("SELECT * FROM stock ORDER BY name")
+    List<Stock> loadAllStocks();
 
     @Insert
     void insertStock(Stock stock);

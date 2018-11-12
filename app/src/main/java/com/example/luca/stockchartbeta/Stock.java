@@ -14,40 +14,40 @@ import android.arch.persistence.room.PrimaryKey;
 public class Stock {
 
     @PrimaryKey(autoGenerate = true)
-    private int mId;
-    private String mName;
-    private String mSymbol;
-    private String mExchange;
+    private int id;
+    private String name;
+    private String symbol;
+    private String exchange;
 
     // constructors
     @Ignore
     public Stock(String name, String symbol, String exchange) {
-        mName = name;
-        mSymbol = symbol;
-        mExchange = exchange;
+        this.name = name;
+        this.symbol = symbol;
+        this.exchange = exchange;
     }
 
     public Stock(int id, String name, String symbol, String exchange) {
-        mId = id;
-        mName = name;
-        mSymbol = symbol;
-        mExchange = exchange;
+        this.id = id;
+        this.name = name;
+        this.symbol = symbol;
+        this.exchange = exchange;
     }
 
     public int getId() {
-        return mId;
+        return id;
     }
 
-    public String getCompanyName() {
-        return mName;
+    public String getName() {
+        return name;
     }
 
-    public String getTickerSymbol() {
-        return mSymbol;
+    public String getSymbol() {
+        return symbol;
     }
 
     public String getExchange() {
-        return mExchange;
+        return exchange;
     }
 
 
