@@ -9,6 +9,7 @@ import android.arch.persistence.room.Update;
 
 import java.util.List;
 
+// Stock DataAccessObject
 @Dao
 public interface StockDao {
 

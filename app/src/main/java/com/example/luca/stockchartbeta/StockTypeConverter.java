@@ -9,7 +9,20 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.List;
 
+
+// type converter class for Stock
 public class StockTypeConverter {
+
+    // convert List<Stock> to json
+    @TypeConverter
+    public static String stockToString(List<Stock> list) {
+        Gson gson = new Gson();
+        Type type = new TypeToken<List<Stock>>() {}.getType();
+        String json = gson.toJson(list, type);
+        return json;
+    }
+
+    // convert from json to List<Stock>
     @TypeConverter
     public static List<Stock> stringToStock(String json) {
         Gson gson = new Gson();
@@ -18,11 +31,5 @@ public class StockTypeConverter {
         return measurements;
     }
 
-    @TypeConverter
-    public static String stockToString(List<Stock> list) {
-        Gson gson = new Gson();
-        Type type = new TypeToken<List<Stock>>() {}.getType();
-        String json = gson.toJson(list, type);
-        return json;
-    }
+
 }
