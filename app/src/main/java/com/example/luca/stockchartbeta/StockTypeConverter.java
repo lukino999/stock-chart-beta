@@ -18,8 +18,7 @@ public class StockTypeConverter {
     public static String stockToString(List<Stock> list) {
         Gson gson = new Gson();
         Type type = new TypeToken<List<Stock>>() {}.getType();
-        String json = gson.toJson(list, type);
-        return json;
+        return gson.toJson(list, type);
     }
 
     // convert from json to List<Stock>
@@ -27,8 +26,7 @@ public class StockTypeConverter {
     public static List<Stock> stringToStock(String json) {
         Gson gson = new Gson();
         Type type = new TypeToken<List<Stock>>() {}.getType();
-        List<Stock> measurements = gson.fromJson(json, type);
-        return measurements;
+        return gson.fromJson(json, type);
     }
 
 
