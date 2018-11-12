@@ -35,12 +35,9 @@ public abstract class AppDatabase extends RoomDatabase {
         Log.d(TAG, "buildDatabase:");
         return Room.databaseBuilder(context,
                 AppDatabase.class, AppDatabase.DATABASE_NAME)
-                // WARNING: temp solution for testing purposes only
-                // To be removed
-                .allowMainThreadQueries()
                 .addCallback(new Callback() {
                     @Override
-                    // this will be called only at first run, when the database hasent been created
+                    // this will be called only at first run, when the database hasn't been created
                     public void onCreate(@NonNull SupportSQLiteDatabase db) {
                         super.onCreate(db);
                         Log.d(TAG, "onCreate: Creating database file");

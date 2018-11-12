@@ -29,6 +29,14 @@ public class AppExecutors {
         return sInstance;
     }
 
+    public Executor getDiskIO() {
+        return diskIO;
+    }
+
+    public Executor getMainThread() {
+        return mainThread;
+    }
+
 
     //
     public static class MainThreadExecutor implements Executor {
