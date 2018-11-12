@@ -74,16 +74,13 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     protected void onResume() {
         super.onResume();
 
+        // get List<Stock> from database
         AppExecutors.getInstance().getDiskIO().execute(new Runnable() {
             @Override
             public void run() {
-
                 final List<Stock> temp = mDb.stockDao().loadAllStocks();
-
                 mAdapter = new StockListAdapter(temp, MainActivity.this);
-
                 mStockList.setAdapter(mAdapter);
-
             }
         });
 
