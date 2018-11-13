@@ -25,7 +25,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener,
         StockListAdapter.ListItemClickListener {
 
-    private static final String TAG = "MainActivity";
+    private static final String TAG = MainActivity.class.getSimpleName();
     private static final String SEARCH_QUERY = "SEARCH_QUERY";
     public static final String STOCK_ID =  "STOCK_ID";
     private StockListAdapter mAdapter;
@@ -106,14 +106,14 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
     private void setupViewModel() {
 
-        // get a reference to the MainViewModel
-        MainViewModel mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        // get a reference to the StocksViewModel
+        StocksViewModel stocksViewModel = ViewModelProviders.of(this).get(StocksViewModel.class);
 
         // get inputStream from /res/raw/nasdaq.csv
         InputStream inputStream = getResources().openRawResource(R.raw.nasdaq);
-        mainViewModel.setInputStream(inputStream);
+        stocksViewModel.setInputStream(inputStream);
 
-        final LiveData<List<Stock>> stocks = mainViewModel.loadAllStocks();
+        final LiveData<List<Stock>> stocks = stocksViewModel.loadAllStocks();
         stocks.observe(this, new Observer<List<Stock>>() {
             @Override
             public void onChanged(@Nullable List<Stock> stocks) {

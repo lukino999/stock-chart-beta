@@ -8,7 +8,7 @@ import android.util.Log;
 
 public class ChartActivity extends AppCompatActivity {
 
-    private static final String TAG = "ChartActivity";
+    private static final String TAG = ChartActivity.class.getSimpleName();
 
 
     @Override

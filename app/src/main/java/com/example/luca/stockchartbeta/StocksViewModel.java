@@ -9,19 +9,19 @@ import android.util.Log;
 import java.io.InputStream;
 import java.util.List;
 
-public class MainViewModel extends AndroidViewModel {
+public class StocksViewModel extends AndroidViewModel {
 
-    private static final String TAG = "MainViewModel";
+    private static final String TAG = StocksViewModel.class.getSimpleName();
 
     private LiveData<List<Stock>> mStocks;
 
 
     private InputStream mInputStream;
 
-    public MainViewModel(@NonNull Application application) {
+    public StocksViewModel(@NonNull Application application) {
         super(application);
-        Log.d(TAG, "MainViewModel: retrieving data from database");
-        AppDatabase database = AppDatabase.getInstance(this.getApplication(), mInputStream);
+        Log.d(TAG, "StocksViewModel: retrieving data from database");
+        StocksDatabase database = StocksDatabase.getInstance(this.getApplication(), mInputStream);
         mStocks = database.stockDao().loadAllStocks();
     }
 

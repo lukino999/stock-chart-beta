@@ -12,14 +12,14 @@ import java.io.InputStream;
 import java.util.concurrent.Executors;
 
 @Database(entities = {Stock.class}, version = 1, exportSchema = false)
-public abstract class AppDatabase extends RoomDatabase {
+public abstract class StocksDatabase extends RoomDatabase {
 
-    private static final String TAG = AppDatabase.class.getSimpleName();
+    private static final String TAG = StocksDatabase.class.getSimpleName();
     private static final Object LOCK = new Object();
     private static final String DATABASE_NAME = "stock_list";
-    private static AppDatabase sInstance;
+    private static StocksDatabase sInstance;
 
-    public static AppDatabase getInstance(Context context, InputStream inputStream) {
+    public static StocksDatabase getInstance(Context context, InputStream inputStream) {
         // create new database instance if doesn't exist
         if (sInstance == null) {
             synchronized (LOCK) {
@@ -31,10 +31,10 @@ public abstract class AppDatabase extends RoomDatabase {
         return sInstance;
     }
 
-    private static AppDatabase buildDatabase(final Context context, final InputStream inputStream) {
+    private static StocksDatabase buildDatabase(final Context context, final InputStream inputStream) {
         Log.d(TAG, "buildDatabase:");
         return Room.databaseBuilder(context,
-                AppDatabase.class, AppDatabase.DATABASE_NAME)
+                StocksDatabase.class, StocksDatabase.DATABASE_NAME)
                 .addCallback(new Callback() {
                     @Override
                     // this will be called only at first run, when the database hasn't been created
