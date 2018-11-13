@@ -27,9 +27,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
     private StockListAdapter mAdapter;
     private RecyclerView mStockList;
-    private AppDatabase mDb;
-    private List<Stock> fullList;
-    private SearchView searchView;
+    private List<Stock> mFullList;
+    private SearchView mSearchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,9 +67,9 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         MenuItem searchButton = menu.findItem(R.id.search_button);
 
         // get a reference to the android.support.v7.widget.SearchView
-        searchView = (SearchView) searchButton.getActionView();
+        mSearchView = (SearchView) searchButton.getActionView();
         // sets the listener to SearchView.OnQueryTextListener
-        searchView.setOnQueryTextListener(this);
+        mSearchView.setOnQueryTextListener(this);
 
         // returning true will display the menu
         return true;
@@ -91,11 +90,12 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             @Override
             public void onChanged(@Nullable List<Stock> stocks) {
                 Log.d(TAG, "retrieving data from LiveData in ViewModel");
-                fullList = stocks;
+                mFullList = stocks;
                 mAdapter.setStockList(stocks);
             }
         });
     }
+
 
     // SearchView.OnQueryTextListener methods implementation
     @Override
@@ -108,7 +108,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         // job done
         return true;
     }
-
 
     private void hideSoftKeyboard(Activity activity) {
         InputMethodManager inputMethodManager = (InputMethodManager)  activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
@@ -126,11 +125,11 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
     private void filterStockList(String s) {
         // filtered list will contain search results
-        List<Stock> filteredList = new ArrayList<Stock>();
+        List<Stock> filteredList = new ArrayList<>();
 
         // iterate through the full list and add any stock that contains
         // the search string in either name or symbol
-        for (Stock stock : fullList) {
+        for (Stock stock : mFullList) {
             if (stock.getName().toLowerCase().contains(s.toLowerCase())) {
                 filteredList.add(stock);
             } else if (stock.getSymbol().toLowerCase().contains(s.toLowerCase())) {
