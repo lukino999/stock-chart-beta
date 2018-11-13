@@ -1,6 +1,7 @@
 package com.example.luca.stockchartbeta;
 
 import android.content.Intent;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,8 +18,20 @@ public class ChartActivity extends AppCompatActivity {
 
         Intent callerIntent = getIntent();
         if (callerIntent.hasExtra(MainActivity.STOCK_ID)) {
+
+            // get a chart fragment
+            ChartFragment chartFragment = new ChartFragment();
+
+            // set Stock id
             int id = callerIntent.getExtras().getInt(MainActivity.STOCK_ID);
-            Log.d(TAG, "onCreate: " + id);
+            chartFragment.setStockId(id);
+
+            // call the fragment
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction()
+                    .add(R.id.chart_container, chartFragment)
+                    .commit();
+
         }
 
     }
