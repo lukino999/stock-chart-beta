@@ -1,5 +1,6 @@
 package com.example.luca.stockchartbeta;
 
+import android.app.Activity;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.os.Bundle;
@@ -12,8 +13,10 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.inputmethod.InputMethodManager;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener,
@@ -24,6 +27,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     private StockListAdapter mAdapter;
     private RecyclerView mStockList;
     private AppDatabase mDb;
+    private List<Stock> fullList;
+    private SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         MenuItem searchButton = menu.findItem(R.id.search_button);
 
         // get a reference to the android.support.v7.widget.SearchView
-        SearchView searchView = (SearchView) searchButton.getActionView();
+        searchView = (SearchView) searchButton.getActionView();
         // sets the listener to SearchView.OnQueryTextListener
         searchView.setOnQueryTextListener(this);
 
@@ -80,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         stocks.observe(this, new Observer<List<Stock>>() {
             @Override
             public void onChanged(@Nullable List<Stock> stocks) {
+                fullList = stocks;
                 mAdapter.setStockList(stocks);
             }
         });
@@ -88,18 +94,46 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     // SearchView.OnQueryTextListener methods implementation
     @Override
     public boolean onQueryTextSubmit(String s) {
-        Log.d(TAG, "onQueryTextSubmit: " + s);
+
+        filterStockList(s);
+
+        hideSoftKeyboard(this);
 
         // job done
         return true;
     }
 
+
+    private void hideSoftKeyboard(Activity activity) {
+        InputMethodManager inputMethodManager = (InputMethodManager)  activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
+    }
+
     @Override
     public boolean onQueryTextChange(String s) {
-        Log.d(TAG, "onQueryTextChange: " + s);
+
+        filterStockList(s);
 
         // job done
         return true;
+    }
+
+    private void filterStockList(String s) {
+        // filtered list will contain search results
+        List<Stock> filteredList = new ArrayList<Stock>();
+
+        // iterate through the full list and add any stock that contains
+        // the search string in either name or symbol
+        for (Stock stock : fullList) {
+            if (stock.getName().toLowerCase().contains(s.toLowerCase())) {
+                filteredList.add(stock);
+            } else if (stock.getSymbol().toLowerCase().contains(s.toLowerCase())) {
+                filteredList.add(stock);
+            }
+        }
+
+        // update RecyclerView
+        mAdapter.setStockList(filteredList);
     }
 
 
