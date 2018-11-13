@@ -3,6 +3,7 @@ package com.example.luca.stockchartbeta;
 import android.app.Activity;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -39,9 +40,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         Toolbar toolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
 
-        // get inputStream from /res/raw/nasdaq.csv
-        InputStream inputStream = getResources().openRawResource(R.raw.nasdaq);
-        mDb = AppDatabase.getInstance(getApplicationContext(), inputStream);
 
         // wire up the recycleView with the adapter
         // get the reference to the recycler view
@@ -55,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         mAdapter = new StockListAdapter(MainActivity.this);
         mStockList.setAdapter(mAdapter);
         //
-        retrieveStockList();
+        setupViewModel();
 
 
     }
@@ -79,12 +77,20 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     }
 
 
-    private void retrieveStockList() {
-        // get List<Stock> from database
-        final LiveData<List<Stock>> stocks = mDb.stockDao().loadAllStocks();
+    private void setupViewModel() {
+
+        // get a reference to the MainViewModel
+        MainViewModel mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+
+        // get inputStream from /res/raw/nasdaq.csv
+        InputStream inputStream = getResources().openRawResource(R.raw.nasdaq);
+        mainViewModel.setInputStream(inputStream);
+
+        final LiveData<List<Stock>> stocks = mainViewModel.loadAllStocks();
         stocks.observe(this, new Observer<List<Stock>>() {
             @Override
             public void onChanged(@Nullable List<Stock> stocks) {
+                Log.d(TAG, "retrieving data from LiveData in ViewModel");
                 fullList = stocks;
                 mAdapter.setStockList(stocks);
             }
