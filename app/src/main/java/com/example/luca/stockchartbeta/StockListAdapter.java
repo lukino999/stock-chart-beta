@@ -37,6 +37,9 @@ public class StockListAdapter extends
         notifyDataSetChanged();
     }
 
+    public Stock getStock(int i) {
+        return mStockList.get(i);
+    }
 
     @NonNull
     @Override

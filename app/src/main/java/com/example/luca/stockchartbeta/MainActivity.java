@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
     private static final String TAG = "MainActivity";
     private static final String SEARCH_QUERY = "SEARCH_QUERY";
+    public static final String STOCK_ID =  "STOCK_ID";
     private StockListAdapter mAdapter;
     private RecyclerView mStockList;
     private List<Stock> mFullList;
@@ -186,6 +188,10 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     // StockListAdapter.ListItemClickListener implementation
     @Override
     public void onListItemClick(int index) {
-        Log.d(TAG, "onListItemClick: " + index);
+        Log.d(TAG, "onListItemClick: " + mAdapter.getStock(index).getSymbol());
+        Intent showChart = new Intent(this, ChartActivity.class);
+        // send stock id through the intent
+        showChart.putExtra(STOCK_ID, mAdapter.getStock(index).getId());
+        startActivity(showChart);
     }
 }
