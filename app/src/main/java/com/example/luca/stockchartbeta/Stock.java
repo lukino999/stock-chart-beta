@@ -15,12 +15,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 // room entity
 @Entity(tableName = "stock")
 @TypeConverters(StockTypeConverter.class)
-public class Stock {
+public class Stock implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
     private int id;

@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final String SEARCH_QUERY = "SEARCH_QUERY";
-    public static final String STOCK_ID =  "STOCK_ID";
+    public static final String STOCK =  "STOCK";
     private StockListAdapter mAdapter;
     private RecyclerView mStockList;
     private List<Stock> mFullList;
@@ -191,7 +191,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         Log.d(TAG, "onListItemClick: " + mAdapter.getStock(index).getSymbol());
         Intent showChart = new Intent(this, ChartActivity.class);
         // send stock id through the intent
-        showChart.putExtra(STOCK_ID, mAdapter.getStock(index).getId());
+        showChart.putExtra(STOCK, mAdapter.getStock(index));
         startActivity(showChart);
     }
 }

@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 
 public class ChartActivity extends AppCompatActivity {
 
@@ -17,14 +16,15 @@ public class ChartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chart);
 
         Intent callerIntent = getIntent();
-        if (callerIntent.hasExtra(MainActivity.STOCK_ID)) {
+        if (callerIntent.hasExtra(MainActivity.STOCK)) {
 
             // get a chart fragment
             ChartFragment chartFragment = new ChartFragment();
 
-            // set Stock id
-            int id = callerIntent.getExtras().getInt(MainActivity.STOCK_ID);
-            chartFragment.setStockId(id);
+            // set Stock
+
+            Stock stock = (Stock) callerIntent.getExtras().getSerializable(MainActivity.STOCK);
+            chartFragment.setStock(stock);
 
             // call the fragment
             FragmentManager fragmentManager = getSupportFragmentManager();

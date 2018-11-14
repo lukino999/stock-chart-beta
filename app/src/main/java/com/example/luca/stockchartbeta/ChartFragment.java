@@ -11,14 +11,14 @@ import android.widget.TextView;
 
 public class ChartFragment extends Fragment {
 
-    private int mStockId = -1;
+    private Stock mStock;
 
     // mandatory constructor
     public ChartFragment() {
     }
 
-    public void setStockId(int id) {
-        mStockId = id;
+    public void setStock(Stock stock) {
+        mStock = stock;
     }
 
     @Nullable
@@ -29,8 +29,8 @@ public class ChartFragment extends Fragment {
 
         TextView textView = rootView.findViewById(R.id.textView);
 
-        if (mStockId != -1) {
-            textView.setText("id: " + mStockId);
+        if (mStock != null) {
+            textView.setText("symbol: " + mStock.getSymbol());
         }
 
 
