@@ -8,7 +8,6 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import java.io.InputStream;
 import java.util.concurrent.Executors;
 
 @Database(entities = {Stock.class}, version = 1, exportSchema = false)
@@ -19,19 +18,20 @@ public abstract class StocksDatabase extends RoomDatabase {
     private static final String DATABASE_NAME = "stock_list";
     private static StocksDatabase sInstance;
 
-    public static StocksDatabase getInstance(Context context, InputStream inputStream) {
+    public static StocksDatabase getInstance(Context context) {
+
         // create new database instance if doesn't exist
         if (sInstance == null) {
             synchronized (LOCK) {
                 Log.d(TAG, "getInstance: Creating new database instance");
-                sInstance = buildDatabase(context, inputStream);
+                sInstance = buildDatabase(context);
             }
         }
         Log.d(TAG, "getInstance: Getting database instance");
         return sInstance;
     }
 
-    private static StocksDatabase buildDatabase(final Context context, final InputStream inputStream) {
+    private static StocksDatabase buildDatabase(final Context context) {
         Log.d(TAG, "buildDatabase:");
         return Room.databaseBuilder(context,
                 StocksDatabase.class, StocksDatabase.DATABASE_NAME)
@@ -45,7 +45,7 @@ public abstract class StocksDatabase extends RoomDatabase {
                             @Override
                             public void run() {
                                 Log.d(TAG, "run: stockDao().insertAll(Stocks)");
-                                getInstance(context, inputStream).stockDao().insertAll(Stock.getArray(inputStream));
+                                getInstance(context).stockDao().insertAll(Stock.getArray(context));
                             }
                         });
                     }

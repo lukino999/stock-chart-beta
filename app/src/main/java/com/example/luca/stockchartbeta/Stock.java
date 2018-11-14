@@ -10,6 +10,8 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
+import android.content.Context;
+import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -22,6 +24,8 @@ import java.util.ArrayList;
 @Entity(tableName = "stock")
 @TypeConverters(StockTypeConverter.class)
 public class Stock implements Serializable {
+
+    private static final String TAG = Stock.class.getSimpleName();
 
     @PrimaryKey(autoGenerate = true)
     private int id;
@@ -61,7 +65,10 @@ public class Stock implements Serializable {
         return exchange;
     }
 
-    public static ArrayList<Stock> getArray(InputStream inputStream) {
+    public static ArrayList<Stock> getArray(Context context) {
+
+
+        InputStream inputStream = context.getResources().openRawResource(R.raw.nasdaq);
 
         // get stream reader
         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
@@ -78,6 +85,7 @@ public class Stock implements Serializable {
             e.printStackTrace();
         }
 
+        Log.d(TAG, "getArray: " + items.size());
         return items;
     }
 

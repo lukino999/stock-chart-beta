@@ -6,7 +6,6 @@ import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import java.io.InputStream;
 import java.util.List;
 
 public class StocksViewModel extends AndroidViewModel {
@@ -16,23 +15,20 @@ public class StocksViewModel extends AndroidViewModel {
     private LiveData<List<Stock>> mStocks;
 
 
-    private InputStream mInputStream;
-
     public StocksViewModel(@NonNull Application application) {
         super(application);
+
+
         Log.d(TAG, "StocksViewModel: retrieving data from database");
-        StocksDatabase database = StocksDatabase.getInstance(this.getApplication(), mInputStream);
+        StocksDatabase database = StocksDatabase.getInstance(this.getApplication());
         mStocks = database.stockDao().loadAllStocks();
-    }
-
-
-    public void setInputStream(InputStream mInputStream) {
-        this.mInputStream = mInputStream;
     }
 
     public LiveData<List<Stock>> loadAllStocks() {
         return mStocks;
     }
+
+
 
 
 }

@@ -18,7 +18,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -109,9 +108,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         // get a reference to the StocksViewModel
         StocksViewModel stocksViewModel = ViewModelProviders.of(this).get(StocksViewModel.class);
 
-        // get inputStream from /res/raw/nasdaq.csv
-        InputStream inputStream = getResources().openRawResource(R.raw.nasdaq);
-        stocksViewModel.setInputStream(inputStream);
 
         final LiveData<List<Stock>> stocks = stocksViewModel.loadAllStocks();
         stocks.observe(this, new Observer<List<Stock>>() {
