@@ -1,4 +1,4 @@
-package com.example.luca.stockchartbeta;
+package com.example.luca.stockchartbeta.stockdatabase;
 
 
 import android.arch.persistence.room.TypeConverter;
@@ -17,7 +17,8 @@ public class StockTypeConverter {
     @TypeConverter
     public static String stockToString(List<Stock> list) {
         Gson gson = new Gson();
-        Type type = new TypeToken<List<Stock>>() {}.getType();
+        Type type = new TypeToken<List<Stock>>() {
+        }.getType();
         return gson.toJson(list, type);
     }
 
@@ -25,7 +26,8 @@ public class StockTypeConverter {
     @TypeConverter
     public static List<Stock> stringToStock(String json) {
         Gson gson = new Gson();
-        Type type = new TypeToken<List<Stock>>() {}.getType();
+        Type type = new TypeToken<List<Stock>>() {
+        }.getType();
         return gson.fromJson(json, type);
     }
 

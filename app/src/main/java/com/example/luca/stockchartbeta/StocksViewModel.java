@@ -6,6 +6,9 @@ import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.example.luca.stockchartbeta.stockdatabase.Stock;
+import com.example.luca.stockchartbeta.stockdatabase.StocksDatabase;
+
 import java.util.List;
 
 public class StocksViewModel extends AndroidViewModel {
@@ -27,8 +30,6 @@ public class StocksViewModel extends AndroidViewModel {
     public LiveData<List<Stock>> loadAllStocks() {
         return mStocks;
     }
-
-
 
 
 }

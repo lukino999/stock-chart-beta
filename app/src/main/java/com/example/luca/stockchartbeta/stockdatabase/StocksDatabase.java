@@ -1,4 +1,4 @@
-package com.example.luca.stockchartbeta;
+package com.example.luca.stockchartbeta.stockdatabase;
 
 import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Database;

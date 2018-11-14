@@ -1,4 +1,4 @@
-package com.example.luca.stockchartbeta;
+package com.example.luca.stockchartbeta.stockdatabase;
 
 // This class contains the data relative to the a stock
 // Namely:
@@ -12,6 +12,8 @@ import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
 import android.util.Log;
+
+import com.example.luca.stockchartbeta.R;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -49,22 +51,6 @@ public class Stock implements Serializable {
         this.exchange = exchange;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getSymbol() {
-        return symbol;
-    }
-
-    public String getExchange() {
-        return exchange;
-    }
-
     public static ArrayList<Stock> getArray(Context context) {
 
 
@@ -87,6 +73,22 @@ public class Stock implements Serializable {
 
         Log.d(TAG, "getArray: " + items.size());
         return items;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getSymbol() {
+        return symbol;
+    }
+
+    public String getExchange() {
+        return exchange;
     }
 
 

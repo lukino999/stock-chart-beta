@@ -1,4 +1,4 @@
-package com.example.luca.stockchartbeta;
+package com.example.luca.stockchartbeta.ui;
 
 import android.app.Activity;
 import android.arch.lifecycle.LiveData;
@@ -18,15 +18,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
 
+import com.example.luca.stockchartbeta.R;
+import com.example.luca.stockchartbeta.StocksViewModel;
+import com.example.luca.stockchartbeta.stockdatabase.Stock;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener,
         StockListAdapter.ListItemClickListener {
 
+    public static final String STOCK = "STOCK";
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final String SEARCH_QUERY = "SEARCH_QUERY";
-    public static final String STOCK =  "STOCK";
     private StockListAdapter mAdapter;
     private RecyclerView mStockList;
     private List<Stock> mFullList;

@@ -1,9 +1,12 @@
-package com.example.luca.stockchartbeta;
+package com.example.luca.stockchartbeta.ui;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+
+import com.example.luca.stockchartbeta.R;
+import com.example.luca.stockchartbeta.stockdatabase.Stock;
 
 public class ChartActivity extends AppCompatActivity {
 

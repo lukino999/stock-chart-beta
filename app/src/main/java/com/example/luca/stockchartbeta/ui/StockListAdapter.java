@@ -1,4 +1,4 @@
-package com.example.luca.stockchartbeta;
+package com.example.luca.stockchartbeta.ui;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -7,29 +7,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import com.example.luca.stockchartbeta.R;
+import com.example.luca.stockchartbeta.stockdatabase.Stock;
+
 import java.util.List;
 
 public class StockListAdapter extends
         RecyclerView.Adapter<StockListAdapter.StockViewHolder> {
 
+    final private ListItemClickListener mOnClickListener;
     private int mNumberItems = 0;
     private List<Stock> mStockList;
-
-    final private ListItemClickListener mOnClickListener;
-
-    // onListItemClick will be called when a list item is clicked
-    public interface ListItemClickListener{
-        void onListItemClick(int index);
-    }
-
 
     // StockListAdapter constructor
     // takes ArrayList<Stock> to display and the ListItemClickListener to respond to clicks
     public StockListAdapter(ListItemClickListener itemClickListener) {
         mOnClickListener = itemClickListener;
     }
-
 
     public void setStockList(List<Stock> stocks) {
         mStockList = stocks;
@@ -56,18 +50,21 @@ public class StockListAdapter extends
         return new StockViewHolder(view);
     }
 
-
     @Override
     public void onBindViewHolder(@NonNull StockViewHolder stockViewHolder, int i) {
         stockViewHolder.bind(mStockList.get(i));
     }
-
 
     @Override
     public int getItemCount() {
         return mNumberItems;
     }
 
+
+    // onListItemClick will be called when a list item is clicked
+    public interface ListItemClickListener {
+        void onListItemClick(int index);
+    }
 
     // View holder for the stock item
     class StockViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

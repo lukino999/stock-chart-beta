@@ -1,4 +1,4 @@
-package com.example.luca.stockchartbeta;
+package com.example.luca.stockchartbeta.ui;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,6 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.example.luca.stockchartbeta.R;
+import com.example.luca.stockchartbeta.stockdatabase.Stock;
 
 public class ChartFragment extends Fragment {
 
@@ -32,7 +35,6 @@ public class ChartFragment extends Fragment {
         if (mStock != null) {
             textView.setText("symbol: " + mStock.getSymbol());
         }
-
 
 
         return rootView;
