@@ -8,7 +8,7 @@ import retrofit2.http.Path;
 
 public interface IEXClient {
 
-    // FOR TESTING ONLY: retrieve only 5 data points harcoded
-    @GET("/1.0/stock/{symbol}/chart?chartLast=5")
+
+    @GET("/1.0/stock/{symbol}/chart/ytd")
     Call<List<IEXChartDataPoint>> chart(@Path("symbol") String symbol);
 }

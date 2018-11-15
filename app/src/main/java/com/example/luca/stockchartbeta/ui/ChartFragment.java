@@ -1,6 +1,9 @@
 package com.example.luca.stockchartbeta.ui;
 
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
+import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,7 +18,18 @@ import com.example.luca.stockchartbeta.R;
 import com.example.luca.stockchartbeta.retrofit.IEXChartDataPoint;
 import com.example.luca.stockchartbeta.retrofit.IEXClient;
 import com.example.luca.stockchartbeta.stockdatabase.Stock;
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.CandleStickChart;
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.data.CandleData;
+import com.github.mikephil.charting.data.CandleDataSet;
+import com.github.mikephil.charting.data.CandleEntry;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -28,6 +42,7 @@ public class ChartFragment extends Fragment {
 
     private static final String TAG = ChartFragment.class.getSimpleName();
     private Stock mStock;
+    private CandleStickChart chart;
 
     // mandatory constructor
     public ChartFragment() {
@@ -44,20 +59,17 @@ public class ChartFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_chart, container, false);
 
-        TextView textView = rootView.findViewById(R.id.textView);
+        chart = rootView.findViewById(R.id.chart_container);
 
         if (mStock != null) {
-            String symbol = mStock.getSymbol();
-            textView.setText("symbol: " + symbol);
-
             // test
-            retrofitTest(symbol);
+            retrofitTest(mStock.getSymbol(), chart);
         }
 
         return rootView;
     }
 
-    private void retrofitTest(String symbol) {
+    private void retrofitTest(String symbol, final CandleStickChart chart) {
 
         // get a Retrofit builder
         Retrofit.Builder builder = new Retrofit.Builder()
@@ -71,10 +83,10 @@ public class ChartFragment extends Fragment {
         IEXClient iexClient = retrofit.create(IEXClient.class);
 
         // create a call from the client
-        Call<List<IEXChartDataPoint>> chart = iexClient.chart(symbol);
+        Call<List<IEXChartDataPoint>> chartData = iexClient.chart(symbol);
 
         // enqueue call
-        chart.enqueue(new Callback<List<IEXChartDataPoint>>() {
+        chartData.enqueue(new Callback<List<IEXChartDataPoint>>() {
             @Override
             public void onResponse(Call<List<IEXChartDataPoint>> call, Response<List<IEXChartDataPoint>> response) {
                 if (response.isSuccessful()) {
@@ -82,6 +94,7 @@ public class ChartFragment extends Fragment {
                     for (IEXChartDataPoint datapoint : datapoints) {
                         Log.d(TAG, "datapoint date: " + datapoint.getDate());
                     }
+                    getChart(datapoints, chart, mStock);
                 } else {
                     Toast.makeText(getContext(), "error code: " + response.code(), Toast.LENGTH_LONG).show();
                 }
@@ -96,4 +109,86 @@ public class ChartFragment extends Fragment {
 
 
     }
+
+    private void getChart(List<IEXChartDataPoint> datapoints, CandleStickChart candleStickChart, Stock stock) {
+
+        // list of candles
+        List<CandleEntry> entries = new ArrayList<>();
+        // list of labels (dates)
+        List<String> labels = new ArrayList<>();
+
+        // populate list
+        for (int i = 0; i < datapoints.size(); i++) {
+
+            IEXChartDataPoint dataPoint = datapoints.get(i);
+
+            // add candle
+            entries.add(new CandleEntry(Float.valueOf(i),
+                    dataPoint.getHigh(),
+                    dataPoint.getLow(),
+                    dataPoint.getOpen(),
+                    dataPoint.getClose()));
+
+            // add label
+            labels.add(dataPoint.getDate());
+
+        }
+
+        // create dataset
+        CandleDataSet dataSet = new CandleDataSet(entries, stock.getSymbol());
+
+        dataSet.setIncreasingColor(Color.GREEN);
+        dataSet.setDecreasingColor(Color.RED);
+        dataSet.setIncreasingPaintStyle(Paint.Style.FILL);
+        dataSet.setDecreasingPaintStyle(Paint.Style.FILL);
+        dataSet.setShadowColor(Color.LTGRAY);
+        dataSet.setBarSpace(.25f);
+        dataSet.setDrawValues(false);
+        dataSet.setDrawHorizontalHighlightIndicator(false);
+        dataSet.setNeutralColor(Color.LTGRAY);
+        // remove the 2 colored squares from legend
+        dataSet.setForm(Legend.LegendForm.NONE);
+
+        // set x axis
+        XAxis xAxis = chart.getXAxis();
+        xAxis.setValueFormatter(new MyXAxisValueFormatter(labels));
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setGranularityEnabled(true);
+        xAxis.setGranularity(1f);
+
+
+        CandleData candleData = new CandleData(dataSet);
+
+        Description description = new Description();
+        description.setText("");
+        candleStickChart.setDescription(description);
+
+        // show chart
+        candleStickChart.setData(candleData);
+        candleStickChart.invalidate();
+
+    }
+
+    public class MyXAxisValueFormatter implements IAxisValueFormatter {
+
+        private List<String> mValues;
+
+        public MyXAxisValueFormatter(List<String> values) {
+            this.mValues = values;
+        }
+
+        @Override
+        public String getFormattedValue(float value, AxisBase axis) {
+            // "value" represents the position of the label on the axis (x or y)
+            return mValues.get((int) value);
+        }
+
+        // remove??
+        /** this is only needed if numbers are returned, else return 0 */
+        //public int getDecimalDigits() { return 0; }
+    }
+
+
 }
+
+
