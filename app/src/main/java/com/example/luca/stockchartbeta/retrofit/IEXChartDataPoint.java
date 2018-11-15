@@ -14,19 +14,19 @@ public class IEXChartDataPoint {
 
     @SerializedName("open")
     @Expose
-    private Double open;
+    private Float open;
 
     @SerializedName("high")
     @Expose
-    private Double high;
+    private Float high;
 
     @SerializedName("low")
     @Expose
-    private Double low;
+    private Float low;
 
     @SerializedName("close")
     @Expose
-    private Double close;
+    private Float close;
 
     @SerializedName("volume")
     @Expose
@@ -76,7 +76,10 @@ public class IEXChartDataPoint {
      * @param date
      * @param close
      */
-    public IEXChartDataPoint(String date, Double open, Double high, Double low, Double close, Integer volume, Integer unadjustedVolume, Double change, Double changePercent, Double vwap, String label, Double changeOverTime) {
+    public IEXChartDataPoint(String date, Float open, Float high, Float low, Float close,
+                             Integer volume, Integer unadjustedVolume,
+                             Double change, Double changePercent, Double vwap,
+                             String label, Double changeOverTime) {
         super();
         this.date = date;
         this.open = open;
@@ -97,22 +100,22 @@ public class IEXChartDataPoint {
     }
 
 
-    public Double getOpen() {
+    public Float getOpen() {
         return open;
     }
 
 
-    public Double getHigh() {
+    public Float getHigh() {
         return high;
     }
 
 
-    public Double getLow() {
+    public Float getLow() {
         return low;
     }
 
 
-    public Double getClose() {
+    public Float getClose() {
         return close;
     }
 
