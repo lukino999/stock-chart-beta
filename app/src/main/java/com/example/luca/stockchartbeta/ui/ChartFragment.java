@@ -3,7 +3,6 @@ package com.example.luca.stockchartbeta.ui;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
-import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,14 +10,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.luca.stockchartbeta.R;
-import com.example.luca.stockchartbeta.retrofit.IEXChartDataPoint;
-import com.example.luca.stockchartbeta.retrofit.IEXClient;
+import com.example.luca.stockchartbeta.retrofit.chartDataPoint;
+import com.example.luca.stockchartbeta.retrofit.chartWebService;
 import com.example.luca.stockchartbeta.stockdatabase.Stock;
-import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.CandleStickChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
@@ -80,18 +77,18 @@ public class ChartFragment extends Fragment {
         Retrofit retrofit = builder.build();
 
         // get a client from retrofit
-        IEXClient iexClient = retrofit.create(IEXClient.class);
+        chartWebService chartWebService = retrofit.create(chartWebService.class);
 
         // create a call from the client
-        Call<List<IEXChartDataPoint>> chartData = iexClient.chart(symbol);
+        Call<List<chartDataPoint>> chartData = chartWebService.getChart(symbol);
 
         // enqueue call
-        chartData.enqueue(new Callback<List<IEXChartDataPoint>>() {
+        chartData.enqueue(new Callback<List<chartDataPoint>>() {
             @Override
-            public void onResponse(Call<List<IEXChartDataPoint>> call, Response<List<IEXChartDataPoint>> response) {
+            public void onResponse(Call<List<chartDataPoint>> call, Response<List<chartDataPoint>> response) {
                 if (response.isSuccessful()) {
-                    List<IEXChartDataPoint> datapoints = response.body();
-                    for (IEXChartDataPoint datapoint : datapoints) {
+                    List<chartDataPoint> datapoints = response.body();
+                    for (chartDataPoint datapoint : datapoints) {
                         Log.d(TAG, "datapoint date: " + datapoint.getDate());
                     }
                     getChart(datapoints, chart, mStock);
@@ -102,7 +99,7 @@ public class ChartFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<List<IEXChartDataPoint>> call, Throwable t) {
+            public void onFailure(Call<List<chartDataPoint>> call, Throwable t) {
                 Toast.makeText(getContext(), "error :(", Toast.LENGTH_SHORT).show();
             }
         });
@@ -110,7 +107,7 @@ public class ChartFragment extends Fragment {
 
     }
 
-    private void getChart(List<IEXChartDataPoint> datapoints, CandleStickChart candleStickChart, Stock stock) {
+    private void getChart(List<chartDataPoint> datapoints, CandleStickChart candleStickChart, Stock stock) {
 
         // list of candles
         List<CandleEntry> entries = new ArrayList<>();
@@ -120,7 +117,7 @@ public class ChartFragment extends Fragment {
         // populate list
         for (int i = 0; i < datapoints.size(); i++) {
 
-            IEXChartDataPoint dataPoint = datapoints.get(i);
+            chartDataPoint dataPoint = datapoints.get(i);
 
             // add candle
             entries.add(new CandleEntry(Float.valueOf(i),

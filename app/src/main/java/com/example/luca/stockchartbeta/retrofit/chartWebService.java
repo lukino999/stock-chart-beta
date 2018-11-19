@@ -6,9 +6,9 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 
-public interface IEXClient {
+public interface chartWebService {
 
+    @GET("/1.0/stock/{symbol}/getChart/ytd")
+    Call<List<chartDataPoint>> getChart(@Path("symbol") String symbol);
 
-    @GET("/1.0/stock/{symbol}/chart/ytd")
-    Call<List<IEXChartDataPoint>> chart(@Path("symbol") String symbol);
 }

@@ -4,7 +4,7 @@ package com.example.luca.stockchartbeta.retrofit;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class IEXChartDataPoint {
+public class chartDataPoint {
 
     // http://www.jsonschema2pojo.org/
 
@@ -59,7 +59,7 @@ public class IEXChartDataPoint {
     /**
      * No args constructor for use in serialization
      */
-    public IEXChartDataPoint() {
+    public chartDataPoint() {
     }
 
     /**
@@ -76,10 +76,10 @@ public class IEXChartDataPoint {
      * @param date
      * @param close
      */
-    public IEXChartDataPoint(String date, Float open, Float high, Float low, Float close,
-                             Integer volume, Integer unadjustedVolume,
-                             Double change, Double changePercent, Double vwap,
-                             String label, Double changeOverTime) {
+    public chartDataPoint(String date, Float open, Float high, Float low, Float close,
+                          Integer volume, Integer unadjustedVolume,
+                          Double change, Double changePercent, Double vwap,
+                          String label, Double changeOverTime) {
         super();
         this.date = date;
         this.open = open;

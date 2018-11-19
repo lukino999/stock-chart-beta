@@ -110,9 +110,10 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     private void setupViewModel() {
 
         // get a reference to the StocksViewModel
-        StocksViewModel stocksViewModel = ViewModelProviders.of(this).get(StocksViewModel.class);
+        StocksViewModel stocksViewModel = ViewModelProviders.of(this)
+                .get(StocksViewModel.class);
 
-
+        // get the stock list
         final LiveData<List<Stock>> stocks = stocksViewModel.loadAllStocks();
         stocks.observe(this, new Observer<List<Stock>>() {
             @Override
@@ -147,8 +148,10 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
     // hide soft keyboard
     private void hideSoftKeyboard(Activity activity) {
-        InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
+        InputMethodManager inputMethodManager = (InputMethodManager) activity
+                .getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(),
+                0);
     }
 
 
