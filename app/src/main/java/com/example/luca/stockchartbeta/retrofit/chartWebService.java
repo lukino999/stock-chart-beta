@@ -8,7 +8,7 @@ import retrofit2.http.Path;
 
 public interface chartWebService {
 
-    @GET("/1.0/stock/{symbol}/getChart/ytd")
+    @GET("/1.0/stock/{symbol}/chart/ytd")
     Call<List<chartDataPoint>> getChart(@Path("symbol") String symbol);
 
 }

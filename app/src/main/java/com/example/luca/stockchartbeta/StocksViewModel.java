@@ -17,10 +17,8 @@ public class StocksViewModel extends AndroidViewModel {
 
     private LiveData<List<Stock>> mStocks;
 
-
     public StocksViewModel(@NonNull Application application) {
         super(application);
-
 
         Log.d(TAG, "StocksViewModel: retrieving data from database");
         StocksDatabase database = StocksDatabase.getInstance(this.getApplication());

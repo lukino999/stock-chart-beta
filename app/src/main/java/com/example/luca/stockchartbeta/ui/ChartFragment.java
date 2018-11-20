@@ -70,7 +70,7 @@ public class ChartFragment extends Fragment {
 
         // get a Retrofit builder
         Retrofit.Builder builder = new Retrofit.Builder()
-                .baseUrl("https://api.iextrading.com/")
+                .baseUrl(getString(R.string.base_url))
                 .addConverterFactory(GsonConverterFactory.create());
 
         // get retrofit object from builder
