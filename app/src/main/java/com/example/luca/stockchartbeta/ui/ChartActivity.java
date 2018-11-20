@@ -19,14 +19,14 @@ public class ChartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chart);
 
         Intent callerIntent = getIntent();
-        if (callerIntent.hasExtra(MainActivity.STOCK)) {
+        if (callerIntent.hasExtra(getResources().getString(R.string.extra_stock))) {
 
             // get a chart fragment
             ChartFragment chartFragment = new ChartFragment();
 
             // set Stock
 
-            Stock stock = (Stock) callerIntent.getExtras().getSerializable(MainActivity.STOCK);
+            Stock stock = (Stock) callerIntent.getExtras().getSerializable(getResources().getString(R.string.extra_stock));
             chartFragment.setStock(stock);
 
             // call the fragment

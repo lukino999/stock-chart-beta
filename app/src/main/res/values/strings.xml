@@ -2,4 +2,5 @@
     <string name="app_name">Stock Chart Beta</string>
     <string name="search">search</string>
     <string name="base_url">https://api.iextrading.com/</string>
+    <string name="extra_stock">STOCK</string>
 </resources>
