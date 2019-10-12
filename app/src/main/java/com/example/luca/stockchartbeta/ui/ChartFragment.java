@@ -80,7 +80,8 @@ public class ChartFragment extends Fragment {
         chartWebService chartWebService = retrofit.create(chartWebService.class);
 
         // create a call from the client
-        Call<List<chartDataPoint>> chartData = chartWebService.getChart(symbol);
+        final String API_TOKEN = getString(R.string.API_TOKEN);
+        Call<List<chartDataPoint>> chartData = chartWebService.getChart(symbol, API_TOKEN);
 
         // enqueue call
         chartData.enqueue(new Callback<List<chartDataPoint>>() {
